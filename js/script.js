@@ -21,15 +21,11 @@ let jogadores = [
 ];
 
 function buscarJogadorPorNome(nome) {
-    // Iterar sobre o array de jogadores
     for (let i = 0; i < jogadores.length; i++) {
-        // Verificar se o nome do jogador atual corresponde ao nome buscado
         if (jogadores[i].nick === nome) {
-            // Se encontrar, retornar o jogador
             return jogadores[i];
         }
     }
-    // Se não encontrar, retornar null
     return null;
 }
 
@@ -41,12 +37,9 @@ document.getElementById('botao-pesquisa').addEventListener('click', function() {
     // Chame a função de busca de jogador por nome e armazene o resultado
     let jogadorEncontrado = buscarJogadorPorNome(nomeBuscado);
 
-    // Verifique se um jogador foi encontrado
     if (jogadorEncontrado !== null) {
-        // Se encontrado, exiba os detalhes do jogador
         console.log('Jogador encontrado:', jogadorEncontrado);
     } else {
-        // Se não encontrado, exiba uma mensagem de erro
         console.log('Jogador não encontrado');
     }
 });

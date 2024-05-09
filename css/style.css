@@ -1,9 +1,11 @@
+/* Background do site */
 body {
     background-color: #1e272e; /* Cor de fundo do corpo */
     color: #ffffff; /* Cor do texto */
     font-family: Arial, sans-serif; /* Fonte do texto */
 }
 
+/* Tabela */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -70,6 +72,7 @@ th {
 }
 
 
+/* Cabeçalho */
 #topo {
     display: flex;
     justify-content: space-between; /* Alinha os elementos ao longo do eixo principal com espaço entre eles */
@@ -101,6 +104,7 @@ th {
 }
 
 
+/* Conteiner do meio */
 .container {
     display: flex;
 }
@@ -182,6 +186,7 @@ th {
 
 
 
+/* Lista dos jogadores disponiveis */
 #lista-jogadores {
     width: 100%;
     height: 400px;
