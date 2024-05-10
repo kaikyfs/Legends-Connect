@@ -1,3 +1,5 @@
+/*CSS DO INDEX */
+
 /* Background do site */
 body {
     background-color: #1e272e; /* Cor de fundo do corpo */
@@ -204,4 +206,71 @@ a {
 
 a:hover {
     text-decoration: underline; /* Adiciona sublinhado ao passar o mouse sobre os links */
+}
+
+
+/* CSS DO PERFIL */
+
+#div1_perfil {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    background-image: url('../img/capas/Zeri.jpg');
+    background-size: cover;
+    background-position: center 20%;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Cor preta com 50% de opacidade */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: #ffffff; /* Cor do texto */
+}
+
+#nick_perfil {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1px; /* Espaçamento inferior entre o nome e o level */
+}
+
+#nick_perfil span {
+    margin-right: 10px; /* Espaçamento entre o ícone e o texto do nick */
+}
+
+#nick_perfil img {
+    width: 50px; /* Tamanho do ícone */
+    height: 50px;
+}
+
+/*Conteiner de div em perfil*/
+.container {
+    display: flex;
+}
+
+.posicao_perfil, .campeos_perfil, .status_perfil {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid black;
+}
+
+.posicao_perfil, .campeos_perfil, .status_perfil {
+    width: 33.33%; /* Define a largura de cada div para ocupar 33.33% da largura total */
+    text-align: center;
+    height: 20%;
+    background-size: cover; /* Ajusta o tamanho da imagem para cobrir todo o elemento */
+    background-image: url('../img/images.jpg'); /* Caminho para a imagem de fundo */
+    background-position: center; /* Centraliza a imagem no elemento */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    color: #ffffff; /* Cor do texto */
+    margin-right: 20px; /* Margem à direita para separar as divs */
 }
