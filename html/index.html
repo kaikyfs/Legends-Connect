@@ -12,20 +12,22 @@
 <body>
     <!-- Cabeçalho -->
     <div id="topo">
-        <h1 id="titulo">
-            Legends Connect
-            <img src="../img/favicon.svg" alt="Logo Legends" style="float:left;width:42px;height:42px;">
-        </h1>
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+            <h1 id="titulo">
+                Legends Connect
+                <img src="../img/favicon.svg" alt="Logo Legends" style="float:left;width:42px;height:42px;">
+            </h1>
+        </a>
         <div class="barra-pesquisa">
             <input type="text" id="pesquisa" placeholder="Pesquisar jogadores...">
-            <button type="button" id="botao-pesquisa">Pesquisar</button>
+            <button type="button" id="botao-pesquisa-inicio">Pesquisar</button>
         </div>
     </div>
 
     <!-- Container do meio, com as 3 div -->
     <div class="container">
         <div class="div1">
-            <h3>IIllIIlIlIlIlI#BR1</h3>
+            <a href="file:///C:/Faculdade/P4/Legends%20Connect/html/perfil.html?nick=IIllIIlIlIlIlI%23BR1"><h3>IIllIIlIlIlIlI#BR1</h3></a>
             <img src="../img/Elos/esmeralda.png" alt="Esmeralda" width="130" height="90">
             <p>Esmeralda</p>
         </div>
@@ -61,7 +63,7 @@
                     </td>
 
                 </tr>
-                
+
 
             </table>
         </div>
@@ -112,7 +114,7 @@
                     <th>Nick</th>
                     <th>Elo</th>
                     <th>Posição</th>
-                    <th>Campeão mais jogados</th>
+                    <th>Campeões mais jogados</th>
                 </tr>
             </thead>
             <tbody>
@@ -121,7 +123,22 @@
     </div>
 
     <script src="../js/script.js"></script>
+    <script>
+        // Chame a função para preencher a tabela, passando a lista de jogadores como argumento
+        preencherTabelaJogadores(jogadores);
+        // Evento de clique no botão de pesquisa da página inicial
+        document.getElementById('botao-pesquisa-inicio').addEventListener('click', function () {
+            // Obtenha o texto digitado na barra de pesquisa
+            const textoPesquisa = document.getElementById('pesquisa').value;
 
+            // Chame a função para pesquisar o jogador
+            const jogadorEncontrado = pesquisarJogador(textoPesquisa);
+
+            // Redirecione o usuário para a página de perfil, passando o nick do jogador como parâmetro na URL
+            window.location.href = 'perfil.html?nick=' + encodeURIComponent(textoPesquisa);
+        });
+
+    </script>
 </body>
 
 </html>
