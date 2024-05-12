@@ -87,17 +87,6 @@ if (window.location.pathname.includes('perfil.html')) {
     }
 }
 
-
-
-// Função para pesquisar jogador
-function pesquisarJogador(textoPesquisa) {
-    // Encontre o jogador com o mesmo nick que foi pesquisado
-    const jogadorEncontrado = jogadores.find(jogador => jogador.nick === textoPesquisa);
-
-    // Retorne o jogador encontrado ou null se não encontrado
-    return jogadorEncontrado;
-}
-
 // Função para exibir informações do jogador na página de perfil
 function exibirInformacoesDoJogador(jogadorEncontrado) {
     if (jogadorEncontrado) {
