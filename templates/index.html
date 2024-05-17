@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legends Connect</title>
+    <link rel="icon" type="image/x-icon" href="../static/img/favicon.svg">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+</head>
+
+<body>
+    <!-- Cabeçalho -->
+    <div id="topo">
+        <a href="index.html" style="text-decoration: none; color: inherit;">
+            <h1 id="titulo">
+                Legends Connect
+                <img src="../static/img/favicon.svg" alt="Logo Legends" style="float:left;width:42px;height:42px;">
+            </h1>
+        </a>
+        <div class="barra-pesquisa">
+            <input type="text" id="pesquisa" placeholder="Pesquisar jogadores...">
+            <button type="button" id="botao-pesquisa-inicio">Pesquisar</button>
+        </div>
+    </div>
+
+    <!-- Container do meio, com as 3 div -->
+    <div class="container">
+        <div class="div1">
+            <a href="file:///C:/Faculdade/P4/Legends%20Connect//templates/perfil.html?nick=IIllIIlIlIlIlI%23BR1"><h3>IIllIIlIlIlIlI#BR1</h3></a>
+            <img src="../static/img/Elos/esmeralda.png" alt="Esmeralda" width="130" height="90">
+            <p>Esmeralda</p>
+        </div>
+        <div class="div2">
+            <h3>Campeões com maiores winrates</h3>
+            <table>
+                <tr>
+                    <th>Campeão</th>
+                    <th>Porcentagem de vitória</th>
+                </tr>
+                <tr>
+                    <td class="celula-com-imagem">
+                        <span class="nome-campeao">Kog'Maw</span>
+                        <img src="../static/img/Campeões/kog.png" alt="Imagem do Campeão" class="img-tabela">
+                    </td>
+                    <td>
+                        <div class="barra-progresso">
+                            <div class="barra-preenchida" style="width: 53.50%;"></div>
+                            <span class="texto-progresso">53.5%</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="celula-com-imagem">
+                        <span class="nome-campeao">Taric</span>
+                        <img src="../static/img/Campeões/taric.png" alt="Imagem do Campeão" class="img-tabela">
+                    </td>
+                    <td>
+                        <div class="barra-progresso">
+                            <div class="barra-preenchida" style="width: 52.80%;"></div>
+                            <span class="texto-progresso">52.8%</span>
+                        </div>
+                    </td>
+
+                </tr>
+
+
+            </table>
+        </div>
+        <div class="div3">
+            <h3>Campeões com menores winrates</h3>
+            <table>
+                <tr>
+                    <th>Campeão</th>
+                    <th>Porcentagem de vitória</th>
+                </tr>
+                <tr>
+                    <td class="celula-com-imagem">
+                        <span class="nome-campeao">K'Sante</span>
+                        <img src="../static/img/Campeões/ksante.png" alt="Imagem do Campeão" class="img-tabela">
+                    </td>
+                    <td>
+                        <div class="barra-progresso">
+                            <div class="barra-preenchida" style="width: 44.4%;"></div>
+                            <span class="texto-progresso">44.4%</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="celula-com-imagem">
+                        <span class="nome-campeao">Azir</span>
+                        <img src="../static/img/Campeões/azir.png" alt="Imagem do Campeão" class="img-tabela">
+                    </td>
+                    <td>
+                        <div class="barra-progresso">
+                            <div class="barra-preenchida" style="width: 45.90%;"></div>
+                            <span class="texto-progresso">45.9%</span>
+                        </div>
+                    </td>
+
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Lista de jogadores disponiveis -->
+    <div id="lista-jogadores">
+        <h3>Jogadores disponíveis</h3>
+        <table id="tabela-jogadores">
+            <thead>
+                <tr>
+                    <th>Nick</th>
+                    <th>Elo</th>
+                    <th>Posição</th>
+                    <th>Campeões mais jogados</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jogador in jogadores %}
+                <tr>
+                    <td>{{ jogador.nick }}</td>
+                    <td>{{ jogador.elo }}</td>
+                    <td>{{ jogador.posicao }}</td>
+                    <td>{{ jogador.campeoesMaisJogados.join(', ') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../static/js/script.js"></script>
+    <script>
+        // Evento de clique no botão de pesquisa da página inicial
+        document.getElementById('botao-pesquisa-inicio').addEventListener('click', function () {
+            // Obtenha o texto digitado na barra de pesquisa
+            const textoPesquisa = document.getElementById('pesquisa').value;
+
+            // Chame a função para pesquisar o jogador
+            const jogadorEncontrado = pesquisarJogador(textoPesquisa);
+
+            // Redirecione o usuário para a página de perfil, passando o nick do jogador como parâmetro na URL
+            window.location.href = 'perfil.html?nick=' + encodeURIComponent(textoPesquisa);
+        });
+
+    </script>
+</body>
+
+</html>
