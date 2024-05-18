@@ -18,7 +18,7 @@
                 <img src="../static/img/favicon.svg" alt="Logo Legends" style="float:left;width:42px;height:42px;">
             </h1>
         </a>
-        <div class="barra-pesquisa">
+        <div class="botao">
             <input type="text" id="pesquisa" placeholder="Pesquisar jogadores...">
             <button type="button" id="botao-pesquisa-inicio">Pesquisar</button>
         </div>
@@ -27,7 +27,9 @@
     <!-- Container do meio, com as 3 div -->
     <div class="container">
         <div class="div1">
-            <a href="file:///C:/Faculdade/P4/Legends%20Connect//templates/perfil.html?nick=IIllIIlIlIlIlI%23BR1"><h3>IIllIIlIlIlIlI#BR1</h3></a>
+            <a href="http://127.0.0.1:5000//perfil.html?nick=IIllIIlIlIlIlI%23BR1">
+                <h3>IIllIIlIlIlIlI#BR1</h3>
+            </a>
             <img src="../static/img/Elos/esmeralda.png" alt="Esmeralda" width="130" height="90">
             <p>Esmeralda</p>
         </div>
@@ -105,9 +107,45 @@
     </div>
 
 
+
+    <!-- Modal para criar jogador -->
+    <div id="modal-criar-jogador" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Criar Novo Jogador</h2>
+            <form id="form-criar-jogador">
+                <label for="nick">Nick:</label>
+                <input type="text" id="nick" name="nick" required><br>
+
+                <label for="posicao">Posição:</label>
+                <input type="text" id="posicao" name="posicao" required><br>
+
+                <label for="icone">URL do Ícone:</label>
+                <input type="text" id="icone" name="icone" required><br>
+
+                <label for="capa">URL da Capa:</label>
+                <input type="text" id="capa" name="capa" required><br>
+
+                <label for="elo">Elo:</label>
+                <input type="text" id="elo" name="elo" required><br>
+
+                <label for="campeoes">Campeões Mais Jogados (separados por vírgula):</label>
+                <input type="text" id="campeoes" name="campeoes" required><br>
+
+                <div class="botao">
+                <button type="submit">Criar Jogador</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <!-- Lista de jogadores disponiveis -->
     <div id="lista-jogadores">
-        <h3>Jogadores disponíveis</h3>
+        <div class="botao">
+            <button id="botao-criar-jogador">Adicionar Jogador</button>
+        </div>
+        <h3 style="margin-top: 10px;">Jogadores disponíveis</h3>
         <table id="tabela-jogadores">
             <thead>
                 <tr>
@@ -118,33 +156,11 @@
                 </tr>
             </thead>
             <tbody>
-                {% for jogador in jogadores %}
-                <tr>
-                    <td>{{ jogador.nick }}</td>
-                    <td>{{ jogador.elo }}</td>
-                    <td>{{ jogador.posicao }}</td>
-                    <td>{{ jogador.campeoesMaisJogados.join(', ') }}</td>
-                </tr>
-                {% endfor %}
             </tbody>
         </table>
     </div>
 
-    <script src="../static/js/script.js"></script>
-    <script>
-        // Evento de clique no botão de pesquisa da página inicial
-        document.getElementById('botao-pesquisa-inicio').addEventListener('click', function () {
-            // Obtenha o texto digitado na barra de pesquisa
-            const textoPesquisa = document.getElementById('pesquisa').value;
-
-            // Chame a função para pesquisar o jogador
-            const jogadorEncontrado = pesquisarJogador(textoPesquisa);
-
-            // Redirecione o usuário para a página de perfil, passando o nick do jogador como parâmetro na URL
-            window.location.href = 'perfil.html?nick=' + encodeURIComponent(textoPesquisa);
-        });
-
-    </script>
+    <script src="../static/js/HomeScript.js"></script>
 </body>
 
 </html>

@@ -65,3 +65,26 @@ def get_jogador(nick):
         return jsonify(jogador.to_dict())
     else:
         return jsonify({'error': 'Jogador não encontrado'}), 404
+    
+
+@app.route('/api/jogadores', methods=['GET'])
+def get_jogadores():
+    return jsonify([jogador.to_dict() for jogador in jogadores])
+
+
+
+@app.route('/api/jogadores', methods=['POST'])
+def criar_jogador():
+    dados = request.json
+    novo_jogador = Jogador(
+        nick=dados['nick'],
+        posicao=dados['posicao'],
+        imgLane='',
+        icone=dados['icone'],
+        capa=dados['capa'],
+        elo=dados['elo'],
+        imgElo='', 
+        campeoesMaisJogados=dados['campeoesMaisJogados']
+    )
+    jogadores.append(novo_jogador)
+    return jsonify({'success': True}), 201
