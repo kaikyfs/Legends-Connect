@@ -139,13 +139,25 @@
         </div>
     </div>
 
-
     <!-- Lista de jogadores disponiveis -->
     <div id="lista-jogadores">
-        <div class="botao">
-            <button id="botao-criar-jogador">Adicionar Jogador</button>
-        </div>
-        <h3 style="margin-top: 10px;">Jogadores disponíveis</h3>
+       <div id="cima-tabela">
+            <div id="filtro-elo">
+                <label for="select-elo">Filtrar por Elo:</label>
+                <select id="select-elo">
+                    <option value="todos">Todos</option>
+                    <option value="Bronze">Bronze</option>
+                    <option value="Prata">Prata</option>
+                    <option value="Ouro">Ouro</option>
+                    <option value="Platina">Platina</option>
+                    <!-- Adicione mais opções conforme necessário -->
+                </select>
+            </div>
+            <h3>Jogadores disponíveis</h3>
+            <div class="botao">
+                <button id="botao-criar-jogador">Adicionar Jogador</button>
+            </div>
+            </div>
         <table id="tabela-jogadores">
             <thead>
                 <tr>

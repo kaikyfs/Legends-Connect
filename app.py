@@ -72,7 +72,6 @@ def get_jogadores():
     return jsonify([jogador.to_dict() for jogador in jogadores])
 
 
-
 @app.route('/api/jogadores', methods=['POST'])
 def criar_jogador():
     dados = request.json

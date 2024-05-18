@@ -131,3 +131,22 @@ document.getElementById('form-criar-jogador').addEventListener('submit', functio
             alert('Erro ao criar jogador');
         });
 });
+
+
+
+//função para caixa de seleção
+// Event listener para mudança na caixa de seleção de elo
+document.getElementById('select-elo').addEventListener('change', function () {
+    const eloSelecionado = this.value;
+
+    fetch('/api/jogadores')
+        .then(response => response.json())
+        .then(jogadores => {
+            // Filtrar jogadores com base no elo selecionado
+            const jogadoresFiltrados = eloSelecionado === 'todos' ? jogadores : jogadores.filter(jogador => jogador.elo === eloSelecionado);
+            preencherTabelaJogadores(jogadoresFiltrados);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar jogadores:', error);
+        });
+});

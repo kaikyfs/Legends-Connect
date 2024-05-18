@@ -244,6 +244,51 @@ th {
 
 
 
+/*cabeçalho tabela*/
+#cima-tabela {
+    display: flex;
+    justify-content: space-between; /* Distribui as divs igualmente ao longo do contêiner */
+    align-items: center; /* Centraliza verticalmente os itens dentro do contêiner */
+}
+
+/*botao filtrar*/
+#filtro-elo{
+    margin-left: 10px;
+}
+
+/* Esconde a seta padrão do <select> */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Adicione outras propriedades de estilo conforme necessário */
+}
+
+/* Estiliza o elemento <select> */
+#select-elo {
+    padding: 3px 9px;
+    border-radius: 5px;
+    border: 1px solid #587da3;
+    background-color:#587da3;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Estiliza a seta do <select> */
+#select-elo::after {
+    content: '\25BC'; /* Unicode para uma seta para baixo */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: white;
+    pointer-events: none; /* Garante que a seta não seja clicável */
+}
+
+
+
+
 /* Lista dos jogadores disponiveis */
 #lista-jogadores {
     width: 100%;
