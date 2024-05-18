@@ -97,14 +97,29 @@ th {
     border: 1px solid #ffffff;
 }
 
-#botao-pesquisa-perfil, #botao-pesquisa-inicio, #botao-pesquisa {
+
+/* Estilo do botão*/
+.botao {
+    display: flex; /* Adicionado para facilitar o alinhamento à direita */
+    justify-content: flex-end; /* Alinha o conteúdo dentro do div à direita */
+    margin-right: 20px; /* Ajusta a margem direita para um melhor posicionamento */
+    margin-top: 10px;
+}
+
+.botao button {
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
-    background-color: #587da3;
-    color: #ffffff;
+    background-color:#587da3; /* Azul padrão */
+    color: white; /* Texto branco */
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Transição suave para mudança de cor */
 }
+
+.botao button:hover {
+    background-color:#1e272e; /* Azul mais escuro ao passar o mouse */
+}
+
 
 
 /* Conteiner do meio */
@@ -179,6 +194,98 @@ th {
     margin-bottom: 20px;
     color: #ffffff; /* Cor do texto */
 }
+
+/* Estilo do Modal */
+.modal {
+    display: none; 
+    position: fixed; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.4); 
+}
+
+.modal-content {
+    background-color:#2c3e50;
+    margin: 10% auto; /* Reduz a margem superior */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px; /* Borda arredondada */
+    width: 60%; /* Menos largo */
+    max-width: 400px; /* Limita a largura máxima */
+}
+
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content form input[type="text"] {
+    width: calc(100% - 20px); /* Aumenta o tamanho das caixas de texto */
+    padding: 10px;
+    margin-bottom: 15px; /* Aumenta a distância entre as caixas de texto */
+    border: 1px solid #888;
+    border-radius: 5px; /* Bordas arredondadas para as caixas de texto */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
+    background-color:#1e272e;
+    color: white;
+}
+
+
+
+/*cabeçalho tabela*/
+#cima-tabela {
+    display: flex;
+    justify-content: space-between; /* Distribui as divs igualmente ao longo do contêiner */
+    align-items: center; /* Centraliza verticalmente os itens dentro do contêiner */
+}
+
+/*botao filtrar*/
+#filtro-elo{
+    margin-left: 10px;
+}
+
+/* Esconde a seta padrão do <select> */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Adicione outras propriedades de estilo conforme necessário */
+}
+
+/* Estiliza o elemento <select> */
+#select-elo {
+    padding: 3px 9px;
+    border-radius: 5px;
+    border: 1px solid #587da3;
+    background-color:#587da3;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Estiliza a seta do <select> */
+#select-elo::after {
+    content: '\25BC'; /* Unicode para uma seta para baixo */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: white;
+    pointer-events: none; /* Garante que a seta não seja clicável */
+}
+
 
 
 

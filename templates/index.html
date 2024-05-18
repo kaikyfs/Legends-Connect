@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legends Connect</title>
-    <link rel="icon" type="image/x-icon" href="../img/favicon.svg">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="icon" type="image/x-icon" href="../static/img/favicon.svg">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
 </head>
 
 <body>
@@ -15,10 +15,10 @@
         <a href="index.html" style="text-decoration: none; color: inherit;">
             <h1 id="titulo">
                 Legends Connect
-                <img src="../img/favicon.svg" alt="Logo Legends" style="float:left;width:42px;height:42px;">
+                <img src="../static/img/favicon.svg" alt="Logo Legends" style="float:left;width:42px;height:42px;">
             </h1>
         </a>
-        <div class="barra-pesquisa">
+        <div class="botao">
             <input type="text" id="pesquisa" placeholder="Pesquisar jogadores...">
             <button type="button" id="botao-pesquisa-inicio">Pesquisar</button>
         </div>
@@ -27,8 +27,10 @@
     <!-- Container do meio, com as 3 div -->
     <div class="container">
         <div class="div1">
-            <a href="file:///C:/Faculdade/P4/Legends%20Connect/html/perfil.html?nick=IIllIIlIlIlIlI%23BR1"><h3>IIllIIlIlIlIlI#BR1</h3></a>
-            <img src="../img/Elos/esmeralda.png" alt="Esmeralda" width="130" height="90">
+            <a href="http://127.0.0.1:5000//perfil.html?nick=IIllIIlIlIlIlI%23BR1">
+                <h3>IIllIIlIlIlIlI#BR1</h3>
+            </a>
+            <img src="../static/img/Elos/esmeralda.png" alt="Esmeralda" width="130" height="90">
             <p>Esmeralda</p>
         </div>
         <div class="div2">
@@ -41,7 +43,7 @@
                 <tr>
                     <td class="celula-com-imagem">
                         <span class="nome-campeao">Kog'Maw</span>
-                        <img src="../img/Campeões/kog.png" alt="Imagem do Campeão" class="img-tabela">
+                        <img src="../static/img/Campeões/kog.png" alt="Imagem do Campeão" class="img-tabela">
                     </td>
                     <td>
                         <div class="barra-progresso">
@@ -53,7 +55,7 @@
                 <tr>
                     <td class="celula-com-imagem">
                         <span class="nome-campeao">Taric</span>
-                        <img src="../img/Campeões/taric.png" alt="Imagem do Campeão" class="img-tabela">
+                        <img src="../static/img/Campeões/taric.png" alt="Imagem do Campeão" class="img-tabela">
                     </td>
                     <td>
                         <div class="barra-progresso">
@@ -77,7 +79,7 @@
                 <tr>
                     <td class="celula-com-imagem">
                         <span class="nome-campeao">K'Sante</span>
-                        <img src="../img/Campeões/ksante.png" alt="Imagem do Campeão" class="img-tabela">
+                        <img src="../static/img/Campeões/ksante.png" alt="Imagem do Campeão" class="img-tabela">
                     </td>
                     <td>
                         <div class="barra-progresso">
@@ -89,7 +91,7 @@
                 <tr>
                     <td class="celula-com-imagem">
                         <span class="nome-campeao">Azir</span>
-                        <img src="../img/Campeões/azir.png" alt="Imagem do Campeão" class="img-tabela">
+                        <img src="../static/img/Campeões/azir.png" alt="Imagem do Campeão" class="img-tabela">
                     </td>
                     <td>
                         <div class="barra-progresso">
@@ -105,9 +107,57 @@
     </div>
 
 
+
+    <!-- Modal para criar jogador -->
+    <div id="modal-criar-jogador" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Criar Novo Jogador</h2>
+            <form id="form-criar-jogador">
+                <label for="nick">Nick:</label>
+                <input type="text" id="nick" name="nick" required><br>
+
+                <label for="posicao">Posição:</label>
+                <input type="text" id="posicao" name="posicao" required><br>
+
+                <label for="icone">URL do Ícone:</label>
+                <input type="text" id="icone" name="icone" required><br>
+
+                <label for="capa">URL da Capa:</label>
+                <input type="text" id="capa" name="capa" required><br>
+
+                <label for="elo">Elo:</label>
+                <input type="text" id="elo" name="elo" required><br>
+
+                <label for="campeoes">Campeões Mais Jogados (separados por vírgula):</label>
+                <input type="text" id="campeoes" name="campeoes" required><br>
+
+                <div class="botao">
+                <button type="submit">Criar Jogador</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Lista de jogadores disponiveis -->
     <div id="lista-jogadores">
-        <h3>Jogadores disponíveis</h3>
+       <div id="cima-tabela">
+            <div id="filtro-elo">
+                <label for="select-elo">Filtrar por Elo:</label>
+                <select id="select-elo">
+                    <option value="todos">Todos</option>
+                    <option value="Bronze">Bronze</option>
+                    <option value="Prata">Prata</option>
+                    <option value="Ouro">Ouro</option>
+                    <option value="Platina">Platina</option>
+                    <!-- Adicione mais opções conforme necessário -->
+                </select>
+            </div>
+            <h3>Jogadores disponíveis</h3>
+            <div class="botao">
+                <button id="botao-criar-jogador">Adicionar Jogador</button>
+            </div>
+            </div>
         <table id="tabela-jogadores">
             <thead>
                 <tr>
@@ -122,23 +172,7 @@
         </table>
     </div>
 
-    <script src="../js/script.js"></script>
-    <script>
-        // Chame a função para preencher a tabela, passando a lista de jogadores como argumento
-        preencherTabelaJogadores(jogadores);
-        // Evento de clique no botão de pesquisa da página inicial
-        document.getElementById('botao-pesquisa-inicio').addEventListener('click', function () {
-            // Obtenha o texto digitado na barra de pesquisa
-            const textoPesquisa = document.getElementById('pesquisa').value;
-
-            // Chame a função para pesquisar o jogador
-            const jogadorEncontrado = pesquisarJogador(textoPesquisa);
-
-            // Redirecione o usuário para a página de perfil, passando o nick do jogador como parâmetro na URL
-            window.location.href = 'perfil.html?nick=' + encodeURIComponent(textoPesquisa);
-        });
-
-    </script>
+    <script src="../static/js/HomeScript.js"></script>
 </body>
 
 </html>
