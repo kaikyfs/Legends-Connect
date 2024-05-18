@@ -52,19 +52,16 @@ def perfil():
     nick = request.args.get('nick')
 
     # Encontrar o jogador correspondente
-    jogador = None
-    for j in jogadores:
-        if j.nick == nick:
-            jogador = j
-            break
+    jogador = next((j for j in jogadores if j.nick == nick), None)
 
     # Renderizar o template perfil.html com os dados do jogador
-    return render_template('perfil.html', jogador=jogador)
+    return render_template('perfil.html', jogador=jogador.to_dict() if jogador else None)
 
-@app.route('/api/jogador/<nick>')
+
+@app.route('/api/jogador/<nick>', methods=['GET'])
 def get_jogador(nick):
-    jogador = next((j for j in jogadores if j['nick'] == nick), None)
+    jogador = next((j for j in jogadores if j.nick == nick), None)
     if jogador:
-        return jsonify(jogador)
+        return jsonify(jogador.to_dict())
     else:
         return jsonify({'error': 'Jogador não encontrado'}), 404

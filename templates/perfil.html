@@ -7,10 +7,10 @@
     <title>{{ jogador['nick'] }}</title>
     <link rel="icon" type="image/x-icon" href="../static/img/favicon.svg">
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+
 </head>
 
 <body>
-    {% if jogador %}
     <!-- Cabeçalho -->
     <div id="topo">
         <a href="index.html" style="text-decoration: none; color: inherit;">
@@ -25,11 +25,11 @@
         </div>
     </div>
 
-    <div id="div1_perfil" style="background-image: url('{{ jogador['capa'] }}')">
+    <div id="div1_perfil">
         <div class="overlay">
-            <h1 id="nick_perfil"> {{jogador['nick']}}
+            <h1 id="nick_perfil">
                 <span id="nickPlayer"></span>
-                <img src="{{ jogador['icone'] }}" id="iconePerfil" alt="Icone perfil">
+                <img id="iconePerfil" alt="Icone perfil">
             </h1>
         </div>
     </div>
@@ -41,27 +41,25 @@
         <!-- Lane -->
         <div class="posicao_perfil">
             <h2>Posição</h2>
-            <img src="{{ jogador['imgLane'] }}" alt="imagem da lane"
+            <img id="imgLane"  alt="imagem da lane"
                 style="width: 100px; height: 100px; margin-top: 30px;">
-            <h4>{{jogador['posicao']}}</h4>
+            <h4 id="lane"></h4>
         </div>
 
         <!-- Champion -->
         <div class="campeoes_perfil">
             <h2>Campeões mais jogados</h2>
-            <ul></ul>
+            <ul id="lista-campeoes"></ul>
         </div>
 
         <!-- ELo -->
         <div class="status_perfil">
             <h2>Elo</h2>
-            <img src="{{ jogador['imgElo'] }}" alt="imagem do elo" style="width: 150px; height: 150px; margin-top: 30px;">
+            <img id="imgElo" alt="imagem do elo" style="width: 150px; height: 150px; margin-top: 30px;">
             <h4><span id="eloPlayer"></span></h4>
         </div>
     </div>
-    {% endif %}
     <script src="../static/js/script.js"></script>
-
 </body>
 
 </html>
