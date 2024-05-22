@@ -217,7 +217,7 @@ th {
     max-width: 400px; /* Limita a largura máxima */
 }
 
-.close {
+.close, .fechar {
     color: white;
     float: right;
     font-size: 28px;
@@ -225,7 +225,9 @@ th {
 }
 
 .close:hover,
-.close:focus {
+.close:focus, 
+.fechar:hover,
+.fechar:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

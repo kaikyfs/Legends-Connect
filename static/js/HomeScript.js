@@ -134,7 +134,7 @@ document.getElementById('form-criar-jogador').addEventListener('submit', functio
 
 
 
-//função para caixa de seleção
+// Função para caixa de seleção
 // Event listener para mudança na caixa de seleção de elo
 document.getElementById('select-elo').addEventListener('change', function () {
     const eloSelecionado = this.value;
@@ -148,5 +148,123 @@ document.getElementById('select-elo').addEventListener('change', function () {
         })
         .catch(error => {
             console.error('Erro ao buscar jogadores:', error);
+        });
+});
+
+
+
+// Código para gerenciar o modal de remover jogadores
+const modalRemover = document.getElementById('modal-remover-jogador');
+const btnRemover = document.getElementById('botao-remover-jogador');
+const spanRemover = document.getElementsByClassName('fechar')[0];
+const btnConfirmarRemocao = document.getElementById('confirmar-remocao');
+
+// Mostrar o modal ao clicar no botão de remover jogador
+btnRemover.onclick = function () {
+    modalRemover.style.display = 'block';
+}
+
+// Fechar o modal ao clicar no 'x'
+spanRemover.onclick = function () {
+    modalRemover.style.display = 'none';
+}
+
+// Fechar o modal ao clicar fora dele
+window.onclick = function (event) {
+    if (event.target == modalRemover) {
+        modalRemover.style.display = 'none';
+    }
+}
+
+// Função para remover jogador
+btnConfirmarRemocao.addEventListener('click', function () {
+    const nick = document.getElementById('nick-remover').value;
+
+    // Verifica se o nick não está vazio
+    if (nick) {
+        fetch('/api/jogadores/' + encodeURIComponent(nick), {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Jogador removido com sucesso!');
+                    modalRemover.style.display = 'none';
+                    buscarJogadores(); // Atualiza a tabela de jogadores
+                } else {
+                    alert('Erro ao remover jogador: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao remover jogador:', error);
+                alert('Erro ao remover jogador');
+            });
+    } else {
+        alert('Por favor, insira o nick do jogador');
+    }
+});
+
+
+// Código para o modal de atualizar jogadores
+const modalAtualizar = document.getElementById('modal-atualizar-jogador');
+const btnAbrirModalAtualizar = document.getElementById('botao-atualizar-jogador');
+const spanAtualizar = document.getElementById('close-atualizar');
+
+// Abrir o modal ao clicar no botão de atualizar jogador
+btnAbrirModalAtualizar.onclick = function () {
+    modalAtualizar.style.display = 'block';
+}
+
+// Fechar o modal ao clicar no 'x'
+spanAtualizar.onclick = function () {
+    modalAtualizar.style.display = 'none';
+}
+
+// Fechar o modal ao clicar fora dele
+window.onclick = function (event) {
+    if (event.target == modalAtualizar) {
+        modalAtualizar.style.display = 'none';
+    }
+}
+
+// Função para atualizar jogador
+document.getElementById('form-atualizar-jogador').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const nick = document.getElementById('nick-atualizar').value;
+    const posicao = document.getElementById('posicao-atualizar').value;
+    const icone = document.getElementById('icone-atualizar').value;
+    const capa = document.getElementById('capa-atualizar').value;
+    const elo = document.getElementById('elo-atualizar').value;
+    const campeoes = document.getElementById('campeoes-atualizar').value.split(',').map(item => item.trim());
+
+    const dadosAtualizados = {
+        posicao: posicao,
+        icone: icone,
+        capa: capa,
+        elo: elo,
+        campeoesMaisJogados: campeoes
+    };
+
+    fetch('/api/jogadores/' + encodeURIComponent(nick), {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dadosAtualizados)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Jogador atualizado com sucesso!');
+                modalAtualizar.style.display = 'none';
+                buscarJogadores(); // Atualiza a tabela de jogadores
+            } else {
+                alert('Erro ao atualizar jogador: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar jogador:', error);
+            alert('Erro ao atualizar jogador');
         });
 });

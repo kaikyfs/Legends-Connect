@@ -87,3 +87,40 @@ def criar_jogador():
     )
     jogadores.append(novo_jogador)
     return jsonify({'success': True}), 201
+
+@app.route('/api/jogadores/<nick>', methods=['DELETE'])
+def remover_jogador(nick):
+    jogador_encontrado = None
+    
+    for jogador in jogadores:
+        if jogador.nick == nick:
+            jogador_encontrado = jogador
+            break
+    
+    if jogador_encontrado:
+        jogadores.remove(jogador_encontrado)
+        return jsonify({"success": True, "message": "Jogador removido com sucesso!"}), 200
+    else:
+        return jsonify({"success": False, "message": "Jogador não encontrado."}), 404
+    
+    
+@app.route('/api/jogadores/<nick>', methods=['PUT'])
+def atualizar_jogador(nick):
+    dados = request.json
+    jogador_encontrado = None
+    
+    for jogador in jogadores:
+        if jogador.nick == nick:
+            jogador_encontrado = jogador
+            break
+    
+    if jogador_encontrado:
+        jogador_encontrado.posicao = dados.get('posicao', jogador_encontrado.posicao)
+        jogador_encontrado.icone = dados.get('icone', jogador_encontrado.icone)
+        jogador_encontrado.capa = dados.get('capa', jogador_encontrado.capa)
+        jogador_encontrado.elo = dados.get('elo', jogador_encontrado.elo)
+        jogador_encontrado.campeoesMaisJogados = dados.get('campeoesMaisJogados', jogador_encontrado.campeoesMaisJogados)
+        return jsonify({"success": True, "message": "Jogador atualizado com sucesso!"}), 200
+    else:
+        return jsonify({"success": False, "message": "Jogador não encontrado."}), 404
+
