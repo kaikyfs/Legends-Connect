@@ -133,15 +133,54 @@
                 <input type="text" id="campeoes" name="campeoes" required><br>
 
                 <div class="botao">
-                <button type="submit">Criar Jogador</button>
+                    <button type="submit">Criar Jogador</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Modal para remover jogador -->
+    <div id="modal-remover-jogador" class="modal">
+        <div class="modal-content">
+            <span class="fechar">&times;</span>
+            <h2>Remover Jogador</h2>
+            <label for="nick-remover">Nick do Jogador:</label>
+            <input type="text" id="nick-remover">
+            <div class="botao">
+            <button id="confirmar-remocao">Remover</button>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal Atualizar Jogador -->
+<div id="modal-atualizar-jogador" class="modal">
+    <div class="modal-content">
+        <span id="close-atualizar" class="close">&times;</span>
+        <h2>Atualizar Jogador</h2>
+        <form id="form-atualizar-jogador">
+            <label for="nick-atualizar">Nick do Jogador:</label>
+            <input type="text" id="nick-atualizar" name="nick" placeholder="Digite o nick do jogador" required>
+            <label for="posicao-atualizar">Posição:</label>
+            <input type="text" id="posicao-atualizar" name="posicao" required>
+            <label for="icone-atualizar">Ícone:</label>
+            <input type="text" id="icone-atualizar" name="icone" required>
+            <label for="capa-atualizar">Capa:</label>
+            <input type="text" id="capa-atualizar" name="capa" required>
+            <label for="elo-atualizar">Elo:</label>
+            <input type="text" id="elo-atualizar" name="elo" required>
+            <label for="campeoes-atualizar">Campeões Mais Jogados (separados por vírgula):</label>
+            <input type="text" id="campeoes-atualizar" name="campeoes" required>
+            <div class="botao">
+            <button type="submit">Atualizar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
     <!-- Lista de jogadores disponiveis -->
     <div id="lista-jogadores">
-       <div id="cima-tabela">
+        <div id="cima-tabela">
             <div id="filtro-elo">
                 <label for="select-elo">Filtrar por Elo:</label>
                 <select id="select-elo">
@@ -154,10 +193,18 @@
                 </select>
             </div>
             <h3>Jogadores disponíveis</h3>
-            <div class="botao">
-                <button id="botao-criar-jogador">Adicionar Jogador</button>
+            <div style="display: flex;">
+                <div class="botao">
+                    <button id="botao-criar-jogador">Adicionar Jogador</button>
+                </div>
+                <div class="botao">
+                    <button id="botao-atualizar-jogador">Atualizar jogador</button>
+                </div>
+                <div class="botao">
+                    <button id="botao-remover-jogador">Remover jogador</button>
+                </div>
             </div>
-            </div>
+        </div>
         <table id="tabela-jogadores">
             <thead>
                 <tr>
