@@ -236,14 +236,14 @@ document.getElementById('form-atualizar-jogador').addEventListener('submit', fun
     const icone = document.getElementById('icone-atualizar').value;
     const capa = document.getElementById('capa-atualizar').value;
     const elo = document.getElementById('elo-atualizar').value;
-    const campeoes = document.getElementById('campeoes-atualizar').value.split(',').map(item => item.trim());
+    const campeoesMaisJogados = document.getElementById('campeoes-atualizar').value.split(',').map(item => item.trim());
 
     const dadosAtualizados = {
         posicao: posicao,
         icone: icone,
         capa: capa,
         elo: elo,
-        campeoesMaisJogados: campeoes
+        campeoesMaisJogados: campeoesMaisJogados
     };
 
     fetch('/api/jogadores/' + encodeURIComponent(nick), {
