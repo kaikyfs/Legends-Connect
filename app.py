@@ -1,11 +1,35 @@
 from flask import Flask, jsonify, render_template, request
+from sqlalchemy.engine import URL
+import sqlalchemy as db
 
 app = Flask(__name__)
+
+# Configuração do banco de dados
+url_object = URL.create(
+    "postgresql",
+    username="postgres",
+    password="524590",
+    host="localhost",
+    database="Legends Connect",
+)
+
+engine = db.create_engine(
+    url_object
+)  # Cria um objeto que representa a conexão com o banco de dados
+conn = engine.connect()  # Abre a conexão com o banco de dados
+metadata = (
+    db.MetaData()
+)  # Objeto para guardar as informações referentes às tabelas do banco de dados
+jogadores_table = db.Table(
+    "jogadores", metadata, autoload_with=engine
+)  # Associa a tabela jogadores a um objeto
 
 
 # Definindo a classe Jogador
 class Jogador:
-    def __init__(self, nick, posicao, imgLane, icone, capa, elo, imgElo, campeoesMaisJogados):
+    def __init__(
+        self, nick, posicao, imgLane, icone, capa, elo, imgElo, campeoesMaisJogados
+    ):
         self.nick = nick
         self.posicao = posicao
         self.imgLane = imgLane
@@ -14,113 +38,170 @@ class Jogador:
         self.elo = elo
         self.imgElo = imgElo
         self.campeoesMaisJogados = campeoesMaisJogados
-   #Para converter em um dicionario 
+
+    # Para converter em um dicionário
     def to_dict(self):
         return {
-            'nick': self.nick,
-            'posicao': self.posicao,
-            'imgLane' : self.imgLane,
-            'icone': self.icone,
-            'capa': self.capa,
-            'elo': self.elo,
-            'imgElo' : self.imgElo,
-            'campeoesMaisJogados': self.campeoesMaisJogados
+            "nick": self.nick,
+            "posicao": self.posicao,
+            "imgLane": self.imgLane,
+            "icone": self.icone,
+            "capa": self.capa,
+            "elo": self.elo,
+            "imgElo": self.imgElo,
+            "campeoesMaisJogados": self.campeoesMaisJogados,
         }
 
-# Definindo os dados dos jogadores no backend
-jogadores = [
-    Jogador('Red00vmq#BR1', 'Topo', '../static/img/Lane/top.png', 'https://lolg-cdn.porofessor.gg/img/d/summonerIcons/14.9/64/4618.png', 'https://lolg-cdn.porofessor.gg/img/d/champion-banners/80.jpg', 'Prata', 'https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/3.png?v=9', ['Singed', 'Pantheon', 'Garen', 'Mordekaiser']),
-    Jogador('Lavinia#BR20', 'Suporte', '../static/img/Lane/sup.png', 'https://lolg-cdn.porofessor.gg/img/d/summonerIcons/14.9/64/5675.png', 'https://lolg-cdn.porofessor.gg/img/d/champion-banners/99.jpg', 'Bronze', 'https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/2.png?v=9', ['Lux', 'Lulu', 'Nami']),
-    Jogador('rdg1#60hz', 'Caçador', '../static/img/Lane/jungle.png', 'https://lolg-cdn.porofessor.gg/img/d/summonerIcons/14.9/64/6570.png', 'https://lolg-cdn.porofessor.gg/img/d/champion-banners/104.jpg', 'Platina', 'https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/5.png?v=9', ['Graves', 'Lee Sin', 'Jax']),
-    Jogador('IIllIIlIlIlIlI#BR1', 'Atirador', '../static/img/Lane/adc.png', 'https://lolg-cdn.porofessor.gg/img/d/summonerIcons/14.9/64/6502.png', 'https://lolg-cdn.porofessor.gg/img/d/champion-banners/221.jpg', 'Ouro', 'https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/4.png?v=9', ['Zeri', 'Varus', 'Ezreal', 'Jinx', 'Xayah']),
-    Jogador('andersoncp123#BR1', 'Topo', '../static/img/top.png', 'https://lolg-cdn.porofessor.gg/img/d/summonerIcons/14.9/64/5734.png', 'https://lolg-cdn.porofessor.gg/img/d/champion-banners/98.jpg', 'Ouro', 'https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/4.png?v=9', ['Shen', 'Seraphine', 'Mordekaiser', 'Nami', 'Kayn']),
-]
+
+# Função para pegar todos os jogadores e retornar eles como uma lista
+def buscar_todos_jogadores():
+    consulta = jogadores_table.select()  # Um select na tabela toda
+    resultado = (
+        conn.execute(consulta).mappings().fetchall()
+    )  # Executa a consulta criada e busca todos os resultados como dicionários
+    jogadores = []
+    for linha in resultado:
+        jogadores.append(
+            Jogador(
+                nick=linha["nick"],
+                posicao=linha["posicao"],
+                imgLane=linha["imglane"],
+                icone=linha["icone"],
+                capa=linha["capa"],
+                elo=linha["elo"],
+                imgElo=linha["imgelo"],
+                campeoesMaisJogados=linha["campeoesmaisjogados"].split(","),
+            )
+        )
+    return jogadores
 
 
-@app.route('/')
+# Buscar um jogador específico pelo nick
+def buscar_um_jogador(nick):
+    consulta = jogadores_table.select().where(
+        jogadores_table.c.nick == nick
+    )  # Consulta para selecionar o jogador da tabela jogadores onde a coluna nick é igual ao valor fornecido
+    resultado = (
+        conn.execute(consulta).mappings().fetchone()
+    )  # Busca o resultado da consulta como dicionário
+    if resultado:
+        return Jogador(
+            nick=resultado["nick"],
+            posicao=resultado["posicao"],
+            imgLane=resultado["imglane"],
+            icone=resultado["icone"],
+            capa=resultado["capa"],
+            elo=resultado["elo"],
+            imgElo=resultado["imgelo"],
+            campeoesMaisJogados=resultado["campeoesmaisjogados"].split(","),
+        )
+    return None
+
+
+@app.route("/")
 def index():
-   return render_template('index.html', jogadores=jogadores)
+    jogadores = buscar_todos_jogadores()
+    return render_template("index.html", jogadores=jogadores)
 
 
-@app.route('/index.html')
-def home():
-   return render_template('index.html', jogadores=jogadores)
-
-@app.route('/perfil.html')
+@app.route("/perfil.html")
 def perfil():
     # Obter o parâmetro 'nick' da URL
-    nick = request.args.get('nick')
+    nick = request.args.get("nick")
 
     # Encontrar o jogador correspondente
-    jogador = next((j for j in jogadores if j.nick == nick), None)
+    jogador = buscar_um_jogador(nick)
 
     # Renderizar o template perfil.html com os dados do jogador
-    return render_template('perfil.html', jogador=jogador.to_dict() if jogador else None)
+    return render_template(
+        "perfil.html", jogador=jogador.to_dict() if jogador else None
+    )
 
 
-@app.route('/api/jogador/<nick>', methods=['GET'])
+@app.route("/api/jogador/<nick>", methods=["GET"])
 def get_jogador(nick):
-    jogador = next((j for j in jogadores if j.nick == nick), None)
+    jogador = buscar_um_jogador(nick)
     if jogador:
         return jsonify(jogador.to_dict())
     else:
-        return jsonify({'error': 'Jogador não encontrado'}), 404
-    
+        return jsonify({"error": "Jogador não encontrado"}), 404
 
-@app.route('/api/jogadores', methods=['GET'])
+
+@app.route("/api/jogadores", methods=["GET"])
 def get_jogadores():
+    jogadores = buscar_todos_jogadores()
     return jsonify([jogador.to_dict() for jogador in jogadores])
 
 
-@app.route('/api/jogadores', methods=['POST'])
+@app.route("/api/jogadores", methods=["POST"])
 def criar_jogador():
-    dados = request.json
-    novo_jogador = Jogador(
-        nick=dados['nick'],
-        posicao=dados['posicao'],
-        imgLane='',
-        icone=dados['icone'],
-        capa=dados['capa'],
-        elo=dados['elo'],
-        imgElo='', 
-        campeoesMaisJogados=dados['campeoesMaisJogados']
-    )
-    jogadores.append(novo_jogador)
-    return jsonify({'success': True}), 201
+    dados = request.json  # Extrai os dados do JSON enviado na solicitação POST
 
-@app.route('/api/jogadores/<nick>', methods=['DELETE'])
+    # Cria um novo objeto Jogador com base nos dados recebidos
+    novo_jogador = Jogador(
+        nick=dados["nick"],
+        posicao=dados["posicao"],
+        imgLane="",
+        icone=dados["icone"],
+        capa=dados["capa"],
+        elo=dados["elo"],
+        imgElo="",
+        campeoesMaisJogados=dados["campeoesMaisJogados"],
+    )
+    # Cria uma instrução de inserção para adicionar o novo jogador à tabela no banco de dados
+    inserir = jogadores_table.insert().values(
+        nick=novo_jogador.nick,
+        posicao=novo_jogador.posicao,
+        imglane=novo_jogador.imgLane,
+        icone=novo_jogador.icone,
+        capa=novo_jogador.capa,
+        elo=novo_jogador.elo,
+        imgelo=novo_jogador.imgElo,
+        campeoesmaisjogados=",".join(novo_jogador.campeoesMaisJogados),
+    )
+    conn.execute(inserir)  # Executa a instrução de inserir no bd
+    conn.commit()
+    return jsonify({"success": True}), 201
+
+
+@app.route("/api/jogadores/<nick>", methods=["DELETE"])
 def remover_jogador(nick):
-    jogador_encontrado = None
-    
-    for jogador in jogadores:
-        if jogador.nick == nick:
-            jogador_encontrado = jogador
-            break
-    
-    if jogador_encontrado:
-        jogadores.remove(jogador_encontrado)
-        return jsonify({"success": True, "message": "Jogador removido com sucesso!"}), 200
+    remove = jogadores_table.delete().where(
+        jogadores_table.c.nick == nick
+    )  # Cria a consulta
+    resultado = conn.execute(remove)  # Executa a consulta
+    conn.commit()
+    # Verifica se algum registro foi removido (resultado.rowcount retorna o número de linhas afetadas)
+    if resultado.rowcount > 0:
+        return (
+            jsonify({"success": True, "message": "Jogador removido com sucesso!"}),
+            200,
+        )
     else:
         return jsonify({"success": False, "message": "Jogador não encontrado."}), 404
-    
-    
-@app.route('/api/jogadores/<nick>', methods=['PUT'])
+
+
+@app.route("/api/jogadores/<nick>", methods=["PUT"])
 def atualizar_jogador(nick):
     dados = request.json
-    jogador_encontrado = None
-    
-    for jogador in jogadores:
-        if jogador.nick == nick:
-            jogador_encontrado = jogador
-            break
-    
-    if jogador_encontrado:
-        jogador_encontrado.posicao = dados.get('posicao', jogador_encontrado.posicao)
-        jogador_encontrado.icone = dados.get('icone', jogador_encontrado.icone)
-        jogador_encontrado.capa = dados.get('capa', jogador_encontrado.capa)
-        jogador_encontrado.elo = dados.get('elo', jogador_encontrado.elo)
-        jogador_encontrado.campeoesMaisJogados = dados.get('campeoesMaisJogados', jogador_encontrado.campeoesMaisJogados)
-        return jsonify({"success": True, "message": "Jogador atualizado com sucesso!"}), 200
+    atualizar = (
+        jogadores_table.update()
+        .where(jogadores_table.c.nick == nick)
+        .values(
+            posicao=dados.get("posicao"),
+            icone=dados.get("icone"),
+            capa=dados.get("capa"),
+            elo=dados.get("elo"),
+            campeoesmaisjogados=",".join(dados.get("campeoesMaisJogados")),
+        )
+    )
+    resultado = conn.execute(atualizar)  # Executa a instrução
+    conn.commit()
+
+    if resultado.rowcount > 0:
+        return (
+            jsonify({"success": True, "message": "Jogador atualizado com sucesso"}),
+            200,
+        )
     else:
         return jsonify({"success": False, "message": "Jogador não encontrado."}), 404
-
